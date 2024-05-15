@@ -1,6 +1,7 @@
 package com.example.retrofitapiproject;
 
 import android.os.Bundle;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -38,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
         Call<TeamResponse> call = service.getTeams();
 
         RecyclerView recyclerView = findViewById(R.id.recycl);
-        List<ItemsMe> kingemyu = new ArrayList<>();
+        List<ItemsMe> team = new ArrayList<>();
 
         call.enqueue(new Callback<TeamResponse>() {
             @Override
@@ -49,20 +50,20 @@ public class MainActivity extends AppCompatActivity {
                     if (teamResponse != null) {
                         List<Teams> teams = teamResponse.getTeams();
                         for (int i = 0; i < teams.size(); i++) {
-                            kingemyu.add(new ItemsMe(teams.get(i).getStrTeam(), teams.get(i).getStrTeamBadge()));
+                            team.add(new ItemsMe(teams.get(i).getStrTeam(), teams.get(i).getStrTeamBadge()));
                         }
                         recyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
-                        recyclerView.setAdapter(new adapter(MainActivity.this, kingemyu));
+                        recyclerView.setAdapter(new adapter(MainActivity.this, team));
                     }
 
                     } else {
-
+                    Toast.makeText(MainActivity.this, "Oops, something happened!", Toast.LENGTH_SHORT).show();
                     }
                 }
 
             @Override
             public void onFailure(Call<TeamResponse> call, Throwable t) {
-
+                Toast.makeText(MainActivity.this, "Oops, something happened!", Toast.LENGTH_SHORT).show();
             }
         });
     }
