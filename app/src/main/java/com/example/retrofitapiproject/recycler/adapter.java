@@ -37,6 +37,12 @@ public class adapter extends RecyclerView.Adapter<vwhld> {
     public void onBindViewHolder(@NonNull vwhld holder, @SuppressLint("RecyclerView") int position) {
         holder.Title.setText(items.get(position).getTitle());
         Glide.with(holder.imageView.getContext()).load(items.get(position).getBadge()).into(holder.imageView);
+        holder.relativeLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                selectListen.OnKlik(items.get(position));
+            }
+        });
     }
 
     @Override

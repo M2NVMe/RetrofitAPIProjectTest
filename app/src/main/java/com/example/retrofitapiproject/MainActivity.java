@@ -1,5 +1,6 @@
 package com.example.retrofitapiproject;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toast;
 
@@ -12,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.retrofitapiproject.recycler.ItemsMe;
+import com.example.retrofitapiproject.recycler.SelectListen;
 import com.example.retrofitapiproject.recycler.adapter;
 
 import java.util.ArrayList;
@@ -23,7 +25,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements SelectListen {
     private static final String BASE_URL ="https://www.thesportsdb.com/api/v1/json/3/";
 
     @Override
@@ -66,5 +68,13 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(MainActivity.this, "Oops, something happened!", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    @Override
+    public void OnKlik(ItemsMe holding) {
+        Intent intent = new Intent(MainActivity.this, Details.class);
+        intent.putExtra("TeamName", holding.getTitle());
+        intent.putExtra("TeamBadge", holding.getBadge());
+        startActivity(intent);
     }
 }
